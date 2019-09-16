@@ -1,25 +1,22 @@
 import { loadableReady } from "@loadable/component";
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { hydrate } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
-const Main: FunctionComponent = () => {
-  React.useEffect(() => {
-    const jssStyles = document.getElementById("jss-server-side");
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }, []);
-
-  return (
+loadableReady(() => {
+  hydrate(
     <BrowserRouter>
       <App />
-    </BrowserRouter>
+    </BrowserRouter>,
+    document.getElementById("root"),
+    () => {
+      const jssStyles = document.getElementById("jss-server-side");
+      if (jssStyles && jssStyles.parentNode) {
+        jssStyles.parentNode.removeChild(jssStyles);
+      }
+    }
   );
-};
-loadableReady(() => {
-  hydrate(<Main />, document.getElementById("root"));
 });
 
 if (module.hot) {

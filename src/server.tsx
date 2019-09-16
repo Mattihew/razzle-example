@@ -8,11 +8,16 @@ import { StaticRouterContext } from "react-router";
 import { StaticRouter } from "react-router-dom";
 import App from "./App";
 import Document from "./Document";
+import { TitleContext } from "./components/util/Title";
 
 const server = express()
   .disable("x-powered-by")
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
   .use((req, res) => {
+    let title: string | undefined;
+    const setTitle = (t: string): void => {
+      title = t;
+    };
     const statsFile = resolve("./build/loadable-stats.json");
     const extractor = new ChunkExtractor({ statsFile, entrypoints: "client" });
     const sheets = new ServerStyleSheets();
@@ -20,9 +25,11 @@ const server = express()
     const html = renderToString(
       extractor.collectChunks(
         sheets.collect(
-          <StaticRouter context={context} location={req.url}>
-            <App />
-          </StaticRouter>
+          <TitleContext.Provider value={setTitle}>
+            <StaticRouter context={context} location={req.url}>
+              <App />
+            </StaticRouter>
+          </TitleContext.Provider>
         )
       )
     );
@@ -36,11 +43,12 @@ const server = express()
       res.write("<!DOCTYPE html>");
       renderToStaticNodeStream(
         <Document
+          title={title}
           headElements={[
             ...extractor.getLinkElements(),
+            ...extractor.getScriptElements(),
             ...extractor.getStyleElements(),
-            sheets.getStyleElement(),
-            ...extractor.getScriptElements()
+            sheets.getStyleElement()
           ]}
         >
           {html}
