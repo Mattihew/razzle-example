@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const LoadablePlugin = require("@loadable/webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   plugins: [
@@ -32,11 +33,10 @@ module.exports = {
           path: undefined,
           filename: "../loadable-stats.json",
           writeToDisk: true
-        })
+        }),
+        new BundleAnalyzerPlugin()
       );
-      config.output.filename = dev
-        ? "static/js/[name].js"
-        : "static/js/[name].[contentHash:8].js";
+      config.output.filename = dev ? "static/js/[name].js" : "static/js/[name].[contentHash:8].js";
       config.optimization.splitChunks = { chunks: "all" };
     }
 

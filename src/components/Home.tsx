@@ -1,18 +1,8 @@
-import {
-  createStyles,
-  Grid,
-  makeStyles,
-  Paper,
-  Theme
-} from "@material-ui/core";
+import { createStyles, Grid, makeStyles, Paper, Theme, Container } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      flexGrow: 1,
-      padding: theme.spacing(2)
-    },
     paper: {
       padding: theme.spacing(2),
       textAlign: "center",
@@ -25,7 +15,7 @@ const Home: FunctionComponent = () => {
   const classes = useStyles();
   return (
     <>
-      <div className={classes.root}>
+      <Container>
         <Grid container alignItems="stretch" spacing={2}>
           <Grid item xs>
             <Paper className={classes.paper}>Hi</Paper>
@@ -34,7 +24,7 @@ const Home: FunctionComponent = () => {
             <Paper className={classes.paper}>Hi2</Paper>
           </Grid>
         </Grid>
-      </div>
+      </Container>
     </>
   );
 };

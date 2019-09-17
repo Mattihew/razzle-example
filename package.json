@@ -9,7 +9,7 @@
     "prebuild": "rm -rf build",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js",
+    "start:prod": "cross-env NODE_ENV=production node build/server.js",
     "lint": "eslint \"src/**\""
   },
   "author": "Matt Rayner",
@@ -42,6 +42,7 @@
     "@types/webpack-env": "^1.14.0",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
+    "cross-env": "^6.0.0",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-react": "^1.1.7",
@@ -53,7 +54,8 @@
     "razzle-dev-utils": "^3.0.0",
     "razzle-plugin-typescript": "^3.0.0",
     "ts-jest": "^24.1.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "webpack-bundle-analyzer": "^3.5.0"
   },
   "jest": {
     "transform": {
