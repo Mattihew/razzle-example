@@ -34,10 +34,14 @@ module.exports = {
           filename: "../loadable-stats.json",
           writeToDisk: true
         }),
-        new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin({
+          analyzerMode: "static",
+          reportFilename: "../report.html",
+          openAnalyzer: false
+        })
       );
       config.output.filename = dev ? "static/js/[name].js" : "static/js/[name].[contentHash:8].js";
-      config.optimization.splitChunks = { chunks: "all" };
+      config.optimization = { ...config.optimization, splitChunks: { chunks: "all" }, runtimeChunk: true };
     }
 
     return config;
